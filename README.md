@@ -12,7 +12,7 @@ This project is a web application designed to facilitate sign-ups for training s
 Check out the live demo of the application [here](https://mizdebski77.github.io/Training-App/).
 
 ## Description
-The Training App is built using React and utilizes HTML and CSS for structuring and styling. It leverages Tailwind CSS and Styled Components for enhanced styling capabilities. Tanstack Query is used for data fetching, enabling seamless integration with the Ninja API for retrieving holiday data. The application provides a user-friendly interface for signing up for training sessions while intelligently excluding unavailable days based on holidays and Sundays.
+The Training App is built using React and utilizes HTML and CSS for structuring and styling. It leverages Tailwind CSS for enhanced styling capabilities. Tanstack Query is used for data fetching, enabling seamless integration with the Ninja API for retrieving holiday data. The application provides a user-friendly interface for signing up for training sessions while intelligently excluding unavailable days based on holidays and Sundays.
 
 ## Technologies Used
 - React
@@ -20,7 +20,6 @@ The Training App is built using React and utilizes HTML and CSS for structuring 
 - CSS
 - Tailwind CSS
 - Tanstack Query
-- Styled Components
 - API (Ninja API for holiday data)
 
 ## Getting Started
