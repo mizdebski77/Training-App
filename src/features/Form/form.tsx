@@ -150,28 +150,8 @@ export const Form = () => {
                 </fieldset>
 
                 <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
-
-                <div className='sm:flex justify-start w-full gap-8'>
-
-                    <Calendar onDaySelect={(date: Date) => setSelectedDayOfWeek(date.toDateString())} />
-
-                    <div>
-                        <span className=''>
-                            Time
-                        </span>
-                        <div className='flex  sm:grid gap-2 '>
-                            {Hours.map((hour) => (
-                                <div
-                                    key={hour}
-                                    className='w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border border-[#cbb6e5]'>
-                                    {hour}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" className="hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-4 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5]">
+                <Calendar onDaySelect={(date: Date) => setSelectedDayOfWeek(date.toDateString())} />
+                <button type="submit" className="hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-4 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-12">
                     Send Application
                 </button>
             </form >

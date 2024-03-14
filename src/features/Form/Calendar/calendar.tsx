@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { weekDay } from '../../../common/Arrays/arrays';
+import { Hours, weekDay } from '../../../common/Arrays/arrays';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import next from '../../../common/svg/next.svg';
@@ -82,7 +82,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     };
 
     return (
-        <div >
+        <div className='sm:flex justify-start w-full gap-8'>
             {isLoading ? (
                 <span className='text-2xl'>Downloading holiday data...</span>
             ) : error ? (
@@ -119,7 +119,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                         </div>
                     </div>
                     {selectedDay && (
-                        <div className="mt-4">
+                        <div className="mt-4 sticky">
                             {holidays.map(
                                 (holiday: HolidayProps) =>
                                     holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}` && (
@@ -131,9 +131,23 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                         </div>
                     )}
                 </div>
-            )
-            }
-        </div >
+            )}
+            <div>
+                <span className=''>
+                    Time
+                </span>
+                <div className='flex  sm:grid gap-2 '>
+                    {Hours.map((hour) => (
+                        <div
+                            key={hour}
+                            className='w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border border-[#cbb6e5]'>
+                            {hour}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+
     );
 
 };
