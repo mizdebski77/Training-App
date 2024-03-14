@@ -5,13 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import next from '../../../common/svg/next.svg';
 import prev from '../../../common/svg/prev.svg';
 import { apiKey, url } from '../../../common/apiData';
-
+import holidayName from '../../../common/svg/holidayName.svg';
 interface HolidayProps {
     country: string;
     iso: string;
     year: number;
     date: string;
     day: string;
+    name: string;
 }
 
 export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void }) => {
@@ -57,10 +58,9 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
         for (let day = 1; day <= totalDays; day++) {
             const isSelected = selectedDay === day;
             const dayOfWeek = new Date(currentYear, currentMonth - 1, day).getDay();
-
             const isDisabled = holidays.some(
                 (holiday: HolidayProps) => holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-            ) || (dayOfWeek === 0 && firstDayOfWeek !== 0); // Sprawdź, czy to niedziela i pierwszy dzień miesiąca nie jest niedzielą
+            ) || (dayOfWeek === 0 && firstDayOfWeek !== 0);
 
             days.push(
                 <div
@@ -124,9 +124,22 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                             {generateDays()}
                         </div>
                     </div>
+                    {selectedDay && (
+                        <div className="mt-4">
+                            {holidays.map(
+                                (holiday: HolidayProps) =>
+                                    holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}` && (
+                                        <span key={holiday.date} className="text-[#000853] flex gap-2">
+                                            <img src={holidayName} />
+                                            It is {holiday.name}.
+                                        </span>
+                                    ))}
+                        </div>
+                    )}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 
 };
