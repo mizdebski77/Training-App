@@ -17,34 +17,25 @@ interface HolidayProps {
 }
 
 export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Date) => void; onHourSelect: (hour: string) => void; }) => {
-
     const [currentYear, setYear] = useState(2023);
     const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedHour, setSelectedHour] = useState('');
 
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['holidays'],
-        queryFn: () => axios
-            .get(url, {
-                headers: {
-                    'X-Api-Key': apiKey
-                },
-            })
+        queryFn: () => axios.get(url, { headers: { 'X-Api-Key': apiKey } })
     });
 
     const holidays = data?.data
-
-    console.log(holidays);
 
     const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
     const firstDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay() || 7;
 
     const changeMonth = (step: number) => {
-        const newMonth = (currentMonth + step);
-        const newYear = currentYear
+        const newMonth = currentMonth + step;
+        const newYear = currentYear;
 
         setMonth(newMonth);
         setYear(newYear);
@@ -60,13 +51,12 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
             days.push(<div key={`empty-${i}`} className="flex items-center justify-center"></div>);
         }
 
-        // Dni miesiąca
         for (let day = 1; day <= totalDays; day++) {
             const isSelected = selectedDay === day;
             const dayOfWeek = new Date(currentYear, currentMonth - 1, day).getDay();
-            const isHoliday = holidays.some(
-                (holiday: HolidayProps) => holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}` &&
-                    holiday.type === "NATIONAL_HOLIDAY"
+            const formattedDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isHoliday = holidays?.some(
+                (holiday: HolidayProps) => holiday.date === formattedDate && holiday.type === "NATIONAL_HOLIDAY"
             );
             const isSunday = dayOfWeek === 0;
             const isDisabled = isSunday || isHoliday;
@@ -89,11 +79,9 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
         const dayOfWeek = selectedDate.getDay();
         const formattedDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
-        const isHoliday = holidays.some(
+        const isHoliday = holidays?.some(
             (holiday: HolidayProps) => holiday.date === formattedDate && holiday.type === "NATIONAL_HOLIDAY"
         );
-
         const isDisabled = dayOfWeek === 0 || isHoliday;
 
         if (isDisabled) {
@@ -101,12 +89,9 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         }
 
         setSelectedDay(day);
-        setSelectedDate(selectedDate);
         onDaySelect(selectedDate);
         setSelectedHour('');
     };
-
-
 
     const handleSelectHour = (hour: string) => {
         setSelectedHour(hour);
@@ -121,11 +106,9 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                 <span className='text-xl'>Oops! Something went wrong...</span>
             ) : (
                 <div>
-                    <span>
-                        Date
-                    </span>
+                    <span>Date</span>
                     <div className=" p-6 max-w-80 	bg-white border border-[#CBB6E5] rounded-lg">
-                        <div className="flex justify-between	 ">
+                        <div className="flex justify-between">
                             <button type='button' className="mr-2" onClick={() => changeMonth(-1)}>
                                 <img src={prev} alt='prev' />
                             </button>
@@ -152,7 +135,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                     </div>
                     {selectedDay && (
                         <div>
-                            {holidays.map(
+                            {holidays?.map(
                                 (holiday: HolidayProps) =>
                                     holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}` && (
                                         <span key={holiday.date} className="text-[#000853] flex gap-2 mt-1">
@@ -165,11 +148,9 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                 </div>
             )}
             <div>
-                {(selectedDay &&
+                {selectedDay && (
                     <div>
-                        <span>
-                            Time
-                        </span>
+                        <span>Time</span>
                         <div className='flex flex-wrap gap-2 sm:grid'>
                             {Hours.map((hour) => (
                                 <div
