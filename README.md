@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. Getting started
 
 ## DEMO
-[Application Demo]([https://mizdebski77.github.io/Movie-Browser/](https://mizdebski77.github.io/Training-App/))
+[Application Demo](https://mizdebski77.github.io/Training-App/)
 
 ## Description
 This application allows users to sign up for training sessions by providing necessary information such as name, surname, email address, photo, and selecting a training day and time. Additionally, the application retrieves holiday data from the Ninja API, which enables the exclusion of Sundays and public holidays as training days. These days are automatically marked as unavailable for selection, with information about holidays displayed next to their names.
