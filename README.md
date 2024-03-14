@@ -1,41 +1,35 @@
-# Trainin App
+# Training App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a web application designed to facilitate sign-ups for training sessions. Users can provide necessary information such as their name, surname, email address, and photo, and select a training day and time. The application also fetches holiday data from the Ninja API to exclude Sundays and public holidays as training days, marking them as unavailable for selection and providing information about the holidays next to their names.
 
-## Table of content
-1. Demo
-1. Description
-1. Technologies
-1. Getting started
+## Table of Contents
+1. [Demo](#demo)
+2. [Description](#description)
+3. [Technologies Used](#technologies-used)
+4. [Getting Started](#getting-started)
 
-## DEMO
-[Application Demo](https://mizdebski77.github.io/Training-App/)
+## Demo
+Check out the live demo of the application [here](https://mizdebski77.github.io/Training-App/).
 
 ## Description
-This application allows users to sign up for training sessions by providing necessary information such as name, surname, email address, photo, and selecting a training day and time. Additionally, the application retrieves holiday data from the Ninja API, which enables the exclusion of Sundays and public holidays as training days. These days are automatically marked as unavailable for selection, with information about holidays displayed next to their names.
+The Training App is built using React and utilizes HTML and CSS for structuring and styling. It leverages Tailwind CSS and Styled Components for enhanced styling capabilities. Tanstack Query is used for data fetching, enabling seamless integration with the Ninja API for retrieving holiday data. The application provides a user-friendly interface for signing up for training sessions while intelligently excluding unavailable days based on holidays and Sundays.
 
-## Technologies used in project
-- `React`
-- `HTML`
-- `CSS`
-- `Tailwind CSS`
-- `Tanstack Query`
-- `Styled Components`
-- `API`
+## Technologies Used
+- React
+- HTML
+- CSS
+- Tailwind CSS
+- Tanstack Query
+- Styled Components
+- API (Ninja API for holiday data)
 
-## Available Scripts
-In the project directory, you can run:
+## Getting Started
+To get a local copy up and running, follow these steps:
 
-### `npm start`
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `npm install` to install dependencies.
+4. Run `npm start` to start the development server.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm run build`
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To build the application for production, run `npm run build`. This command will create a production-ready build in the `build` folder, optimized for performance.
