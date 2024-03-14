@@ -143,6 +143,9 @@ export const Form = () => {
 
                     </div>
                 </fieldset>
+
+                <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
+
             </form>
 
         </div>
