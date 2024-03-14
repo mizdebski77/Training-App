@@ -93,9 +93,9 @@ export const Form = () => {
 
     return (
         <div className='max-w-[426px] m-auto'>
-            <h1 className='  text-2xl mb-6 text-[#000853] font-medium'>Personal Info</h1>
+            <h1 className=' text-2xl mb-6 text-[#000853] font-medium'>Personal Info</h1>
 
-            <form className="grid gap-4  group" encType="multipart/form-data" onSubmit={handleSubmit}>
+            <form className="grid gap-6  group" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <fieldset className='grid  gap-2 '>
                     <label className='text-[#000853]'>First Name</label>
                     <input
@@ -103,7 +103,7 @@ export const Form = () => {
                         value={name}
                         required
                         onChange={({ target }) => setName(target.value)}
-                        className='p-2 rounded-md  w-full  border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA]' />
+                        className='p-2 rounded-lg h-12  w-full  border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA]' />
                 </fieldset>
 
                 <fieldset className='grid  gap-2'>
@@ -113,15 +113,15 @@ export const Form = () => {
                         required
                         value={lastName}
                         onChange={({ target }) => setLastName(target.value)}
-                        className='p-2 rounded-md border required border-[#cbb6e5] focus:outline-[#761BE4]' />
+                        className='p-2 rounded-lg h-12 border required border-[#cbb6e5] focus:outline-[#761BE4]' />
                 </fieldset>
 
 
                 <fieldset className='grid gap-2'>
-                    <label>Email</label>
+                    <label className='text-[#000853]'>Email</label>
                     <input
                         type="email"
-                        className="bg-[#FFFFFF] p-2 rounded-md border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA] appearance-none  text-neutral-800 invalid:[&:not(:placeholder-shown):not(:focus)]:border-[#ED4545] invalid:[&:not(:placeholder-shown):not(:focus)]:border-2 invalid:[&:not(:placeholder-shown):not(:focus)]:bg-[#FEECEC] peer"
+                        className="bg-[#FFFFFF] p-2 h-12 rounded-lg border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA] appearance-none  text-neutral-800 invalid:[&:not(:placeholder-shown):not(:focus)]:border-[#ED4545] invalid:[&:not(:placeholder-shown):not(:focus)]:border-2 invalid:[&:not(:placeholder-shown):not(:focus)]:bg-[#FEECEC] peer"
                         value={email}
                         onChange={({ target }) => setEmail(target.value)}
                         required
@@ -129,7 +129,7 @@ export const Form = () => {
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     />
 
-                    <span className="mt-2 hidden text-sm peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                    <span className=" text-[#000853] hidden text-sm peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                         <div className='flex gap-2 items-start'>
                             <img src={validation} alt='validation' className='mt-1 font-medium' />
                             <span>
@@ -145,11 +145,11 @@ export const Form = () => {
                 <fieldset>
                     <label
                         htmlFor="customRange1"
-                        className="mb-2 inline-block text-neutral-700 dark:text-neutral-200">
+                        className="mb-1 inline-block text-[#000853] dark:text-neutral-200">
                         Age
                     </label>
 
-                    <label className='flex justify-between'>
+                    <label className='flex justify-between text-xs px-1'>
                         <span>8</span>
                         <span>100</span>
                     </label>
@@ -209,11 +209,11 @@ export const Form = () => {
                     </div>
                 </fieldset>
 
-                <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
+                <h2 className='text-[24px] font-medium text-[#000853]'>Your Workout</h2>
                 <Calendar onDaySelect={handleDaySelect} onHourSelect={handleHourSelect} />
                 <button
                     type="submit"
-                    className={`hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-4 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-12 ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-2.5 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-6 ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={!isFormValid}
                 >
                     Send Application
