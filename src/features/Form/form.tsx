@@ -1,4 +1,5 @@
 import React from 'react';
+import validation from '../../common/svg/validation.svg';
 
 export const Form = () => {
     return (
@@ -28,6 +29,18 @@ export const Form = () => {
                         required
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     />
+
+                    <span className="mt-2 hidden text-sm peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        <div className='flex gap-2 items-start'>
+                            <img src={validation} alt='validation' className='mt-1 font-medium' />
+                            <span>
+                                Please use correct formatting.
+                                <p>
+                                    Example: address@email.com
+                                </p>
+                            </span>
+                        </div>
+                    </span>
                 </fieldset>
             </form>
 
