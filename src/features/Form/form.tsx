@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
+import { Calendar } from './Calendar/calendar';
 
 export const Form = () => {
 
@@ -145,6 +146,7 @@ export const Form = () => {
                 </fieldset>
 
                 <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
+                <Calendar />
 
             </form>
 
