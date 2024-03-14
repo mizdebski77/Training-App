@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
 import { Calendar } from './Calendar/calendar';
@@ -14,7 +14,6 @@ export const Form = () => {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [isFormValid, setIsFormValid] = useState(false);
 
     const formData = new FormData();
     formData.append('Name', name);
