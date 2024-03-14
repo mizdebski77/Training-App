@@ -75,16 +75,11 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
         return days;
     };
 
-
-
     const handleDayClick = (day: number) => {
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
         setSelectedDay(day);
         onDaySelect(selectedDate);
     };
-
-
-
 
     return (
         <div >
