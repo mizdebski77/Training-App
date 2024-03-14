@@ -15,7 +15,7 @@ interface HolidayProps {
     year: number
 }
 
-export const Calendar = () => {
+export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void }) => {
 
     const currentDate = new Date();
     const [currentYear, setYear] = useState(currentDate.getFullYear());
@@ -85,6 +85,7 @@ export const Calendar = () => {
     const handleDayClick = (day: number) => {
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
         setSelectedDay(day);
+        onDaySelect(selectedDate);
     };
 
 

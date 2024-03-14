@@ -7,6 +7,7 @@ export const Form = () => {
 
     const [sliderValue, setSliderValue] = useState(8);
     const [fileName, setFileName] = useState('');
+    const [selectedDayOfWeek, setSelectedDayOfWeek] = useState<string | null>(null);
 
     const updateTextPosition = (event: React.FormEvent<HTMLInputElement>) => {
         const value = parseInt(event.currentTarget.value, 10);
@@ -33,7 +34,8 @@ export const Form = () => {
     const handleFileRemove = () => {
         setFileName('');
     };
-    const [selectedDayOfWeek, setSelectedDayOfWeek] = useState(null); // Dodaj stan dla zaznaczonego dnia tygodnia
+
+    console.log(selectedDayOfWeek);
 
 
 
@@ -147,7 +149,8 @@ export const Form = () => {
                 </fieldset>
 
                 <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
-                <Calendar/>
+                <Calendar onDaySelect={(date: Date) => setSelectedDayOfWeek(date.toDateString())} />
+
             </form>
 
         </div>
