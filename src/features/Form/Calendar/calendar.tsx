@@ -64,7 +64,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
             days.push(
                 <div
                     key={day}
-                    className={`flex items-center justify-center w-8 h-8 cursor-pointer rounded-full text-[#000853] ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-[#898DA9] cursor-no-drop' : ''} `}
+                    className={`flex items-center justify-center w-8 h-8 rounded-full text-[#000853] ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-[#898DA9] cursor-no-drop' : ''} `}
                     onClick={() => handleDayClick(day)}
                 >
                     {day}
@@ -99,7 +99,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
     };
 
     return (
-        <div className='sm:flex grid justify-start w-full gap-6'>
+        <div className='sm:flex grid sm:justify-start w-full gap-6'>
             {isLoading ? (
                 <span className='text-xl'>Downloading holiday data...</span>
             ) : error ? (
