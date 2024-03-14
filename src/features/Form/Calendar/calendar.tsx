@@ -13,6 +13,7 @@ interface HolidayProps {
     date: string;
     day: string;
     name: string;
+    type: string;
 }
 
 export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Date) => void; onHourSelect: (hour: string) => void; }) => {
@@ -35,6 +36,8 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
     });
 
     const holidays = data?.data
+
+    console.log(holidays);
 
     const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
     const firstDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay() || 7;
@@ -61,14 +64,17 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         for (let day = 1; day <= totalDays; day++) {
             const isSelected = selectedDay === day;
             const dayOfWeek = new Date(currentYear, currentMonth - 1, day).getDay();
-            const isDisabled = holidays.some(
-                (holiday: HolidayProps) => holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-            ) || (dayOfWeek === 0 && firstDayOfWeek !== 0);
+            const isHoliday = holidays.some(
+                (holiday: HolidayProps) => holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}` &&
+                    holiday.type === "NATIONAL_HOLIDAY"
+            );
+            const isSunday = dayOfWeek === 0;
+            const isDisabled = isSunday || isHoliday;
 
             days.push(
                 <div
                     key={day}
-                    className={`flex items-center justify-center w-8 h-8 cursor-pointer rounded-full text-[#000853] ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-[#898DA9] cursor-not-allowed' : ''} `}
+                    className={`flex items-center justify-center w-8 h-8 cursor-pointer rounded-full text-[#000853] ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-[#898DA9] cursor-no-drop' : ''} `}
                     onClick={() => handleDayClick(day)}
                 >
                     {day}
@@ -81,11 +87,26 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
 
     const handleDayClick = (day: number) => {
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
+        const dayOfWeek = selectedDate.getDay();
+        const formattedDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+        const isHoliday = holidays.some(
+            (holiday: HolidayProps) => holiday.date === formattedDate && holiday.type === "NATIONAL_HOLIDAY"
+        );
+
+        const isDisabled = dayOfWeek === 0 || isHoliday;
+
+        if (isDisabled) {
+            return;
+        }
+
         setSelectedDay(day);
         setSelectedDate(selectedDate);
         onDaySelect(selectedDate);
         setSelectedHour('');
     };
+
+
 
     const handleSelectHour = (hour: string) => {
         setSelectedHour(hour);
@@ -144,27 +165,25 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                 </div>
             )}
             <div>
-                {(selectedDate && selectedDay && !holidays.some((holiday: HolidayProps) =>
-                    holiday.date === `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`) &&
-                    selectedDate.getDay() !== 0) && (
-                        <div>
-                            <span>
-                                Time
-                            </span>
-                            <div className='flex flex-wrap gap-2 sm:grid'>
-                                {Hours.map((hour) => (
-                                    <div
-                                        key={hour}
-                                        className={`w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border cursor-pointer ${selectedHour === hour ? ' border-2 border-[#761BE4]' : 'border-[#cbb6e5]'}
+                {(selectedDay &&
+                    <div>
+                        <span>
+                            Time
+                        </span>
+                        <div className='flex flex-wrap gap-2 sm:grid'>
+                            {Hours.map((hour) => (
+                                <div
+                                    key={hour}
+                                    className={`w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border cursor-pointer ${selectedHour === hour ? ' border-2 border-[#761BE4]' : 'border-[#cbb6e5]'}
                                     }`}
-                                        onClick={() => handleSelectHour(hour)}
-                                    >
-                                        {hour}
-                                    </div>
-                                ))}
-                            </div>
+                                    onClick={() => handleSelectHour(hour)}
+                                >
+                                    {hour}
+                                </div>
+                            ))}
                         </div>
-                    )}
+                    </div>
+                )}
             </div>
         </div>
     );
