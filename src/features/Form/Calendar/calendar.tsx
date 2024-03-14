@@ -20,7 +20,8 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const [currentYear, setYear] = useState(2023);
     const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null); // Dodajemy stan przechowujący wybraną datę
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedHour, setSelectedHour] = useState('');
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['holidays'],
@@ -78,12 +79,19 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const handleDayClick = (day: number) => {
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
         setSelectedDay(day);
-        setSelectedDate(selectedDate); // Ustawiamy wybraną datę po kliknięciu na dzień
+        setSelectedDate(selectedDate);
         onDaySelect(selectedDate);
     };
 
+    const handleSelectHour = (hour: string) => {
+        setSelectedHour(hour);
+    };
+
+    console.log(selectedHour);
+
+
     return (
-        <div className='sm:flex justify-start w-full gap-8'>
+        <div className='sm:flex justify-start w-full gap-6'>
             {isLoading ? (
                 <span className='text-2xl'>Downloading holiday data...</span>
             ) : error ? (
@@ -145,7 +153,10 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                                 {Hours.map((hour) => (
                                     <div
                                         key={hour}
-                                        className='w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border border-[#cbb6e5]'>
+                                        className={`w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border cursor-pointer ${selectedHour === hour ? ' border-2 border-[#761BE4]' : 'border-[#cbb6e5]'}
+                                    }`}
+                                        onClick={() => handleSelectHour(hour)}
+                                    >
                                         {hour}
                                     </div>
                                 ))}
