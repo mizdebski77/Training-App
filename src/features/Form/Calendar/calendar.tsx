@@ -4,15 +4,14 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import next from '../../../common/svg/next.svg';
 import prev from '../../../common/svg/prev.svg';
+import { apiKey, url } from '../../../common/apiData';
 
 interface HolidayProps {
     country: string;
+    iso: string;
+    year: number;
     date: string;
     day: string;
-    iso: string;
-    name: string;
-    type: string;
-    year: number
 }
 
 export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void }) => {
@@ -22,11 +21,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const [currentMonth, setMonth] = useState(currentDate.getMonth() + 1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
-    const country = 'PL';
-    const year = '2023';
-    const apiKey = '8DX8eEe67njS1lbThFsdSw==rQQNpQ8PYbPZBjrx';
 
-    const url = `https://api.api-ninjas.com/v1/holidays?country=${country}&year=${year}`;
     const { isLoading, error, data } = useQuery({
         queryKey: ['holidays'],
         queryFn: () => axios
@@ -36,12 +31,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                 },
             })
     });
-
-    const holidays = [
-        { country: 'Poland', iso: 'PL', year: 2023, date: '2023-12-28', day: 'Tuesday' },
-        { country: 'Poland', iso: 'PL', year: 2023, date: '2023-12-22', day: 'Friday' },
-    ];
-
+    const holidays = data?.data
 
     const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
     const firstDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay();
@@ -49,6 +39,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const changeMonth = (step: number) => {
         const newMonth = (currentMonth + step);
         const newYear = currentYear
+
         setMonth(newMonth);
         setYear(newYear);
         setSelectedDay(null);
@@ -59,19 +50,22 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
         const days = [];
 
         for (let i = 1; i < firstDayOfWeek; i++) {
-            days.push(<div key={`empty-${i}`} className="flex items-center justify-center  "></div>);
+            days.push(<div key={`empty-${i}`} className="flex items-center justify-center"></div>);
         }
 
         // Dni miesiąca
         for (let day = 1; day <= totalDays; day++) {
-            const isToday = day === currentDate.getDate() && currentMonth === currentDate.getMonth() + 1 && currentYear === currentDate.getFullYear();
             const isSelected = selectedDay === day;
-            // const isDisabled = holidays.some((holiday: HolidayProps[]) => holiday.date === `<span class="math-inline">\{currentYear\}\-</span>{String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`)
+            const dayOfWeek = new Date(currentYear, currentMonth - 1, day).getDay();
+
+            const isDisabled = holidays.some(
+                (holiday: HolidayProps) => holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+            ) || dayOfWeek === 0;
 
             days.push(
                 <div
                     key={day}
-                    className={`flex items-center justify-center w-8 h-8  cursor-pointer rounded-full } ${isSelected ? 'text-white bg-[#761BE4] ' : ''}''}`}
+                    className={`flex items-center justify-center w-8 h-8 cursor-pointer rounded-full ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-gray-400 cursor-not-allowed' : ''} `}
                     onClick={() => handleDayClick(day)}
                 >
                     {day}
@@ -81,6 +75,8 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
 
         return days;
     };
+
+
 
     const handleDayClick = (day: number) => {
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
