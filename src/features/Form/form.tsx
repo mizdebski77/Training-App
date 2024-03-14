@@ -45,8 +45,9 @@ export const Form = () => {
     };
 
     const textContainerStyle = {
-        left: `calc(${(sliderValue / 100) * 100}% - 44px + ${(sliderValue / 100) * 18}px)`,
+        left: `calc(${(sliderValue / 100) * 100}% - ${window.innerWidth <= 500 ? '36px' : '44px'} + ${(sliderValue / 100) * (window.innerWidth <= 500 ? 10 : 18)}px)`,
     };
+
 
     const handleFileChange = (event: React.FormEvent<HTMLInputElement>) => {
         const file = event.currentTarget.files?.[0];

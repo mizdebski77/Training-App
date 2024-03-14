@@ -99,7 +99,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
     };
 
     return (
-        <div className='sm:flex justify-start w-full gap-6'>
+        <div className='sm:flex grid justify-start w-full gap-6'>
             {isLoading ? (
                 <span className='text-xl'>Downloading holiday data...</span>
             ) : error ? (
@@ -107,7 +107,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
             ) : (
                 <div>
                     <span>Date</span>
-                    <div className=" px-6 py-4 pt-7 max-w-80 	bg-white border border-[#CBB6E5] rounded-lg">
+                    <div className=" px-6 py-4 pt-7 max-w-80  m-auto bg-white border border-[#CBB6E5] rounded-lg">
                         <div className="flex justify-between">
                             <button type='button' className="mr-2" onClick={() => changeMonth(-1)}>
                                 <img src={prev} alt='prev' />
