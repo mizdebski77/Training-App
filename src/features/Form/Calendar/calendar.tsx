@@ -20,7 +20,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const [currentYear, setYear] = useState(2023);
     const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
-
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null); // Dodajemy stan przechowujący wybraną datę
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['holidays'],
@@ -78,6 +78,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const handleDayClick = (day: number) => {
         const selectedDate = new Date(currentYear, currentMonth - 1, day);
         setSelectedDay(day);
+        setSelectedDate(selectedDate); // Ustawiamy wybraną datę po kliknięciu na dzień
         onDaySelect(selectedDate);
     };
 
@@ -119,11 +120,11 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                         </div>
                     </div>
                     {selectedDay && (
-                        <div className="mt-4 sticky">
+                        <div>
                             {holidays.map(
                                 (holiday: HolidayProps) =>
                                     holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}` && (
-                                        <span key={holiday.date} className="text-[#000853] flex gap-2">
+                                        <span key={holiday.date} className="text-[#000853] flex gap-2 mt-1">
                                             <img src={holidayName} alt='Holiday Name Icon' />
                                             It is {holiday.name}.
                                         </span>
@@ -133,18 +134,24 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                 </div>
             )}
             <div>
-                <span className=''>
-                    Time
-                </span>
-                <div className='flex  sm:grid gap-2 '>
-                    {Hours.map((hour) => (
-                        <div
-                            key={hour}
-                            className='w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border border-[#cbb6e5]'>
-                            {hour}
+                {(selectedDate && !holidays.some((holiday: HolidayProps) =>
+                    holiday.date === `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`) &&
+                    selectedDate.getDay() !== 0) && (
+                        <div>
+                            <span>
+                                Time
+                            </span>
+                            <div className='grid gap-2'>
+                                {Hours.map((hour) => (
+                                    <div
+                                        key={hour}
+                                        className='w-[76px] h-[46px] flex items-center justify-center bg-white rounded-lg border border-[#cbb6e5]'>
+                                        {hour}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    ))}
-                </div>
+                    )}
             </div>
         </div>
 
