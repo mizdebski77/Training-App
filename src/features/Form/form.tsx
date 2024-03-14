@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
 import { Calendar } from './Calendar/calendar';
-import { Hours } from '../../common/Arrays/arrays';
 
 export const Form = () => {
 
@@ -40,6 +39,7 @@ export const Form = () => {
 
 
 
+    const isSmallScreen = window.innerWidth <= 768;
 
     return (
         <div className='max-w-[426px] m-auto'>
@@ -126,9 +126,9 @@ export const Form = () => {
                         >
                             <p className="text-base text-[#898DA9] dark:text-gray-400 ">
                                 <span className={`${fileName ? 'text-[#000853]  font-medium mr-2' : 'text-[#761BE4] underline underline-offset-4 font-regular mr-2'}`}>
-                                    {fileName ? fileName : 'Upload a file'}
+                                    {fileName ? fileName : (isSmallScreen ? 'Upload file' : 'Upload a file')}
                                 </span>
-                                {fileName ? '' : '  or drag and drop here'}
+                                {fileName ? '' : (isSmallScreen ? '' : '  or drag and drop here')}
                             </p>
                             {fileName && (
                                 <button
