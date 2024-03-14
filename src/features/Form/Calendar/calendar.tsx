@@ -16,7 +16,7 @@ interface HolidayProps {
     type: string;
 }
 
-export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Date) => void; onHourSelect: (hour: string) => void; }) => {
+export const Calendar = ({ onDaySelect, onHourSelect, resetTimeValues }: { onDaySelect: (date: Date) => void; onHourSelect: (hour: string) => void; resetTimeValues: () => void; }) => {
     const [currentYear, setYear] = useState(2023);
     const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
@@ -41,7 +41,10 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         setYear(newYear);
         setSelectedDay(null);
         setSelectedHour('');
+        resetTimeValues();
     };
+
+
 
     const generateDays = () => {
         const totalDays = daysInMonth(currentYear, currentMonth);

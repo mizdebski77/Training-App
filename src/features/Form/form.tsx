@@ -88,6 +88,10 @@ export const Form = () => {
         }
     };
 
+    const resetTimeValues = () => {
+        setSelectedDayOfWeek(null);
+        setSelectedHourOfDay(null);
+    };
 
     const isSmallScreen = window.innerWidth <= 768;
 
@@ -211,10 +215,10 @@ export const Form = () => {
                 </fieldset>
 
                 <h2 className='text-[24px] font-medium text-[#000853]'>Your Workout</h2>
-                <Calendar onDaySelect={handleDaySelect} onHourSelect={handleHourSelect} />
+                <Calendar onDaySelect={handleDaySelect} onHourSelect={handleHourSelect} resetTimeValues={resetTimeValues} />
                 <button
                     type="submit"
-                    className={`hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-2.5 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-6 ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`hover:bg-[#6A19CD] duration-300 rounded-md bg-[#761BE4] py-2.5 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-6 ${!isFormValid ? ' bg-[#CBB6E5] hover:bg-[#CBB6E5]' : ''}`}
                     disabled={!isFormValid}
                 >
                     Send Application
