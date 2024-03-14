@@ -1,8 +1,9 @@
 import React from 'react';
+import { Form } from '../features/Form/form';
 
 function App() {
   return (
-    null
+    <Form />
   );
 }
 
