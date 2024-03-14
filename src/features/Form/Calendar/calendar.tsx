@@ -149,7 +149,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                             <span>
                                 Time
                             </span>
-                            <div className='grid gap-2'>
+                            <div className='flex flex-wrap gap-2 sm:grid'>
                                 {Hours.map((hour) => (
                                     <div
                                         key={hour}
