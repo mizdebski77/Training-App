@@ -17,8 +17,8 @@ interface HolidayProps {
 export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void }) => {
 
     const currentDate = new Date();
-    const [currentYear, setYear] = useState(currentDate.getFullYear());
-    const [currentMonth, setMonth] = useState(currentDate.getMonth() + 1);
+    const [currentYear, setYear] = useState(2023);
+    const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
 
@@ -34,7 +34,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
     const holidays = data?.data
 
     const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
-    const firstDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay();
+    const firstDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay() || 7;
 
     const changeMonth = (step: number) => {
         const newMonth = (currentMonth + step);
@@ -60,7 +60,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
 
             const isDisabled = holidays.some(
                 (holiday: HolidayProps) => holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-            ) || dayOfWeek === 0;
+            ) || (dayOfWeek === 0 && firstDayOfWeek !== 0); // Sprawdź, czy to niedziela i pierwszy dzień miesiąca nie jest niedzielą
 
             days.push(
                 <div
