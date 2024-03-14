@@ -17,7 +17,6 @@ interface HolidayProps {
 
 export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void }) => {
 
-    const currentDate = new Date();
     const [currentYear, setYear] = useState(2023);
     const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
@@ -65,7 +64,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
             days.push(
                 <div
                     key={day}
-                    className={`flex items-center justify-center w-8 h-8 cursor-pointer rounded-full ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-gray-400 cursor-not-allowed' : ''} `}
+                    className={`flex items-center justify-center w-8 h-8 cursor-pointer rounded-full text-[#000853] ${isSelected ? 'text-white bg-[#761BE4]' : ''} ${isDisabled ? 'text-[#898DA9] cursor-not-allowed' : ''} `}
                     onClick={() => handleDayClick(day)}
                 >
                     {day}
@@ -130,7 +129,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                                 (holiday: HolidayProps) =>
                                     holiday.date === `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(selectedDay).padStart(2, '0')}` && (
                                         <span key={holiday.date} className="text-[#000853] flex gap-2">
-                                            <img src={holidayName} />
+                                            <img src={holidayName} alt='Holiday Name Icon' />
                                             It is {holiday.name}.
                                         </span>
                                     ))}

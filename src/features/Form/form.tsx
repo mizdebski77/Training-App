@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
 import { Calendar } from './Calendar/calendar';
