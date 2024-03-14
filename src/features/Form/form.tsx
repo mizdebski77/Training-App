@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
 import { Calendar } from './Calendar/calendar';
+import axios from 'axios';
 
 export const Form = () => {
 
@@ -9,6 +10,22 @@ export const Form = () => {
     const [fileName, setFileName] = useState('');
     const [selectedDayOfWeek, setSelectedDayOfWeek] = useState<string | null>(null);
     const [selectedHourOfDay, setSelectedHourOfDay] = useState<string | null>(null);
+    const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+
+    const formData = [
+        {
+            'Name': name,
+            'Last Name': lastName,
+            'E-Mail': email,
+            'Age': sliderValue,
+            'File': fileName,
+            'Day': selectedDayOfWeek,
+            'Hour': selectedHourOfDay,
+        }
+    ]
+
 
     const updateTextPosition = (event: React.FormEvent<HTMLInputElement>) => {
         const value = parseInt(event.currentTarget.value, 10);
@@ -36,8 +53,8 @@ export const Form = () => {
         setFileName('');
     };
 
-    console.log(selectedDayOfWeek, selectedHourOfDay);
-    
+    console.log(formData);
+
     const handleDaySelect = (date: Date) => {
         setSelectedDayOfWeek(date.toDateString());
     };
@@ -49,6 +66,7 @@ export const Form = () => {
 
     const isSmallScreen = window.innerWidth <= 768;
 
+
     return (
         <div className='max-w-[426px] m-auto'>
             <h1 className='  text-2xl mb-6 text-[#000853] font-medium'>Personal Info</h1>
@@ -56,12 +74,22 @@ export const Form = () => {
             <form className="grid gap-4  group" >
                 <fieldset className='grid  gap-2 '>
                     <label className='text-[#000853]'>First Name</label>
-                    <input className='p-2 rounded-md  w-full  border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA]' />
+                    <input
+                        type='name'
+                        value={name}
+                        required
+                        onChange={({ target }) => setName(target.value)}
+                        className='p-2 rounded-md  w-full  border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA]' />
                 </fieldset>
 
                 <fieldset className='grid  gap-2'>
                     <label className='text-[#000853]'>Last Name</label>
-                    <input className='p-2 rounded-md border required border-[#cbb6e5] focus:outline-[#761BE4]' />
+                    <input
+                        type='name'
+                        required
+                        value={lastName}
+                        onChange={({ target }) => setLastName(target.value)}
+                        className='p-2 rounded-md border required border-[#cbb6e5] focus:outline-[#761BE4]' />
                 </fieldset>
 
 
@@ -69,11 +97,11 @@ export const Form = () => {
                     <label>Email</label>
                     <input
                         type="email"
-                        name="email"
-                        id="email"
                         className="bg-[#FFFFFF] p-2 rounded-md border border-[#cbb6e5] focus:outline-[#761BE4]  active:bg-[#FAF9FA] appearance-none  text-neutral-800 invalid:[&:not(:placeholder-shown):not(:focus)]:border-[#ED4545] invalid:[&:not(:placeholder-shown):not(:focus)]:border-2 invalid:[&:not(:placeholder-shown):not(:focus)]:bg-[#FEECEC] peer"
-                        placeholder=" "
+                        value={email}
+                        onChange={({ target }) => setEmail(target.value)}
                         required
+                        placeholder=" "
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                     />
 
@@ -107,7 +135,6 @@ export const Form = () => {
                             min={8}
                             max={100}
                             id="range"
-                            // unit="number"
                             className="bg-[#CBB6E5] w-full focus:outline-none h-1.5 focus:ring-purple-600 accent-[#761BE4] cursor-pointer appearance rounded-lg "
                             value={sliderValue}
                             onChange={updateTextPosition}
@@ -148,6 +175,7 @@ export const Form = () => {
                             )}
                             <input
                                 onChange={handleFileChange}
+                                required
                                 className="hidden relative m-0 w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-[0.32rem] text-base font-normal leading-[2.15] text-surface transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:me-3 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-e file:border-solid file:border-inherit file:bg-transparent file:px-3  file:py-[0.32rem] file:text-surface focus:border-primary focus:text-gray-700 focus:shadow-inset focus:outline-none dark:border-white/70 dark:text-white  file:dark:text-white"
                                 id="formFileLg"
                                 type="file"

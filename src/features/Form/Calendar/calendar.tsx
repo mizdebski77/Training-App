@@ -84,12 +84,15 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         setSelectedDay(day);
         setSelectedDate(selectedDate);
         onDaySelect(selectedDate);
+        setSelectedHour('');
     };
 
     const handleSelectHour = (hour: string) => {
         setSelectedHour(hour);
         onHourSelect(hour);
     };
+
+    
 
     return (
         <div className='sm:flex justify-start w-full gap-6'>
@@ -143,7 +146,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                 </div>
             )}
             <div>
-                {(selectedDate && !holidays.some((holiday: HolidayProps) =>
+                {(selectedDate && selectedDay && !holidays.some((holiday: HolidayProps) =>
                     holiday.date === `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`) &&
                     selectedDate.getDay() !== 0) && (
                         <div>
