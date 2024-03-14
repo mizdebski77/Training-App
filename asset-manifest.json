@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Training-App/static/css/main.ee790ece.css",
-    "main.js": "/Training-App/static/js/main.eff012a0.js",
+    "main.css": "/Training-App/static/css/main.47c00c7d.css",
+    "main.js": "/Training-App/static/js/main.0a43b243.js",
     "static/js/453.92efa817.chunk.js": "/Training-App/static/js/453.92efa817.chunk.js",
     "static/media/holidayName.svg": "/Training-App/static/media/holidayName.2c2dd37dc342fef89afecd67ffc2279b.svg",
     "static/media/validation.svg": "/Training-App/static/media/validation.a72859bbc44b3dd2c88b992e05531fe5.svg",
@@ -9,12 +9,12 @@
     "index.html": "/Training-App/index.html",
     "static/media/next.svg": "/Training-App/static/media/next.59c9762d0380d3d9bf07a70b37558b4b.svg",
     "static/media/prev.svg": "/Training-App/static/media/prev.4c1363dc05fd65832b3b79f223388ad1.svg",
-    "main.ee790ece.css.map": "/Training-App/static/css/main.ee790ece.css.map",
-    "main.eff012a0.js.map": "/Training-App/static/js/main.eff012a0.js.map",
+    "main.47c00c7d.css.map": "/Training-App/static/css/main.47c00c7d.css.map",
+    "main.0a43b243.js.map": "/Training-App/static/js/main.0a43b243.js.map",
     "453.92efa817.chunk.js.map": "/Training-App/static/js/453.92efa817.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee790ece.css",
-    "static/js/main.eff012a0.js"
+    "static/css/main.47c00c7d.css",
+    "static/js/main.0a43b243.js"
   ]
 }
