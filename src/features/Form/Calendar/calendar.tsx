@@ -92,7 +92,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         onHourSelect(hour);
     };
 
-    
+
 
     return (
         <div className='sm:flex justify-start w-full gap-6'>
@@ -107,7 +107,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                     </span>
                     <div className=" p-6 max-w-80 	bg-white border border-[#CBB6E5] rounded-lg">
                         <div className="flex justify-between	 ">
-                            <button className="mr-2" onClick={() => changeMonth(-1)}>
+                            <button type='button' className="mr-2" onClick={() => changeMonth(-1)}>
                                 <img src={prev} alt='prev' />
                             </button>
 
@@ -115,7 +115,7 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                                 {new Date(currentYear, currentMonth - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                             </h1>
 
-                            <button className="ml-2" onClick={() => changeMonth(1)}>
+                            <button type='button' className="ml-2" onClick={() => changeMonth(1)}>
                                 <img src={next} alt='next' />
                             </button>
                         </div>

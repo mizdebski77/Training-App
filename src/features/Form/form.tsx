@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
 import { Calendar } from './Calendar/calendar';
@@ -7,25 +7,25 @@ import axios from 'axios';
 export const Form = () => {
 
     const [sliderValue, setSliderValue] = useState(8);
+    const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState('');
     const [selectedDayOfWeek, setSelectedDayOfWeek] = useState<string | null>(null);
     const [selectedHourOfDay, setSelectedHourOfDay] = useState<string | null>(null);
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
 
-    const formData = [
-        {
-            'Name': name,
-            'Last Name': lastName,
-            'E-Mail': email,
-            'Age': sliderValue,
-            'File': fileName,
-            'Day': selectedDayOfWeek,
-            'Hour': selectedHourOfDay,
-        }
-    ]
-
+    const formData = new FormData();
+    formData.append('Name', name);
+    formData.append('Last Name', lastName);
+    formData.append('E-Mail', email);
+    formData.append('Age', sliderValue.toString());
+    if (file) {
+        formData.append('File', file);
+    }
+    formData.append('Day', selectedDayOfWeek || '');
+    formData.append('Hour', selectedHourOfDay || '');
 
     const updateTextPosition = (event: React.FormEvent<HTMLInputElement>) => {
         const value = parseInt(event.currentTarget.value, 10);
@@ -42,6 +42,7 @@ export const Form = () => {
             const validImageTypes = ['image/jpeg', 'image/png', 'image/JPG', 'image/PNG'];
 
             if (validImageTypes.includes(file.type)) {
+                setFile(file);
                 setFileName(file.name);
             } else {
                 alert('Please upload a JPG or PNG file.');
@@ -50,10 +51,9 @@ export const Form = () => {
     };
 
     const handleFileRemove = () => {
+        setFile(null);
         setFileName('');
     };
-
-    console.log(formData);
 
     const handleDaySelect = (date: Date) => {
         setSelectedDayOfWeek(date.toDateString());
@@ -64,6 +64,18 @@ export const Form = () => {
     };
 
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        try {
+            await axios.post('http://letsworkout.pl/submit', formData);
+            console.log('Form submitted successfully');
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    };
+
+
     const isSmallScreen = window.innerWidth <= 768;
 
 
@@ -71,7 +83,7 @@ export const Form = () => {
         <div className='max-w-[426px] m-auto'>
             <h1 className='  text-2xl mb-6 text-[#000853] font-medium'>Personal Info</h1>
 
-            <form className="grid gap-4  group" >
+            <form className="grid gap-4  group" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <fieldset className='grid  gap-2 '>
                     <label className='text-[#000853]'>First Name</label>
                     <input
