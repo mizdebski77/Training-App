@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import validation from '../../common/svg/validation.svg';
 import rangeInput from '../../common/svg/rangeInput.svg';
 import { Calendar } from './Calendar/calendar';
@@ -14,6 +14,19 @@ export const Form = () => {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+
+        setIsFormValid(
+            name.trim() !== '' &&
+            lastName.trim() !== '' &&
+            email.trim() !== '' &&
+            selectedDayOfWeek !== null &&
+            selectedHourOfDay !== null
+        );
+    }, [name, lastName, email, selectedDayOfWeek, selectedHourOfDay]);
+
 
     const formData = new FormData();
     formData.append('Name', name);
@@ -198,7 +211,11 @@ export const Form = () => {
 
                 <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
                 <Calendar onDaySelect={handleDaySelect} onHourSelect={handleHourSelect} />
-                <button type="submit" className="hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-4 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-12">
+                <button
+                    type="submit"
+                    className={`hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-4 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-12 ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={!isFormValid}
+                >
                     Send Application
                 </button>
             </form >

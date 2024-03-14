@@ -92,8 +92,6 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
         onHourSelect(hour);
     };
 
-
-
     return (
         <div className='sm:flex justify-start w-full gap-6'>
             {isLoading ? (
@@ -169,8 +167,5 @@ export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Da
                     )}
             </div>
         </div>
-
     );
-
 };
-
