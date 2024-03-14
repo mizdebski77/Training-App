@@ -8,6 +8,7 @@ export const Form = () => {
     const [sliderValue, setSliderValue] = useState(8);
     const [fileName, setFileName] = useState('');
     const [selectedDayOfWeek, setSelectedDayOfWeek] = useState<string | null>(null);
+    const [selectedHourOfDay, setSelectedHourOfDay] = useState<string | null>(null);
 
     const updateTextPosition = (event: React.FormEvent<HTMLInputElement>) => {
         const value = parseInt(event.currentTarget.value, 10);
@@ -35,8 +36,15 @@ export const Form = () => {
         setFileName('');
     };
 
-    console.log(selectedDayOfWeek);
+    console.log(selectedDayOfWeek, selectedHourOfDay);
+    
+    const handleDaySelect = (date: Date) => {
+        setSelectedDayOfWeek(date.toDateString());
+    };
 
+    const handleHourSelect = (hour: string) => {
+        setSelectedHourOfDay(hour);
+    };
 
 
     const isSmallScreen = window.innerWidth <= 768;
@@ -150,7 +158,7 @@ export const Form = () => {
                 </fieldset>
 
                 <h2 className='text-[24px] text-[#000853]'>Your Workout</h2>
-                <Calendar onDaySelect={(date: Date) => setSelectedDayOfWeek(date.toDateString())} />
+                <Calendar onDaySelect={handleDaySelect} onHourSelect={handleHourSelect} />
                 <button type="submit" className="hover:bg-[#6A19CD] rounded-md bg-[#761BE4] py-4 px-8 text-[18px] text-white group-invalid:pointer-events-none group-invalid:bg-[#CBB6E5] mt-12">
                     Send Application
                 </button>

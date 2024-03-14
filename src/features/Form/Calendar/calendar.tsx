@@ -15,13 +15,14 @@ interface HolidayProps {
     name: string;
 }
 
-export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void }) => {
+export const Calendar = ({ onDaySelect, onHourSelect }: { onDaySelect: (date: Date) => void; onHourSelect: (hour: string) => void; }) => {
 
     const [currentYear, setYear] = useState(2023);
     const [currentMonth, setMonth] = useState(1);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedHour, setSelectedHour] = useState('');
+
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['holidays'],
@@ -32,6 +33,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
                 },
             })
     });
+
     const holidays = data?.data
 
     const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
@@ -44,6 +46,7 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
         setMonth(newMonth);
         setYear(newYear);
         setSelectedDay(null);
+        setSelectedHour('');
     };
 
     const generateDays = () => {
@@ -85,17 +88,15 @@ export const Calendar = ({ onDaySelect }: { onDaySelect: (date: Date) => void })
 
     const handleSelectHour = (hour: string) => {
         setSelectedHour(hour);
+        onHourSelect(hour);
     };
-
-    console.log(selectedHour);
-
 
     return (
         <div className='sm:flex justify-start w-full gap-6'>
             {isLoading ? (
-                <span className='text-2xl'>Downloading holiday data...</span>
+                <span className='text-xl'>Downloading holiday data...</span>
             ) : error ? (
-                <span className='text-2xl'>Oops! Something went wrong...</span>
+                <span className='text-xl'>Oops! Something went wrong...</span>
             ) : (
                 <div>
                     <span>
